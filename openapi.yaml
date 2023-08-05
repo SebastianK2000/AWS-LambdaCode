@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: CRUD-API
+servers:
+  - url: https://770rvtgf1a.execute-api.eu-north-1.amazonaws.com/Prod
+
+paths:
+  /items:
+    get:
+      summary: Pobierz listę wszystkich przedmiotów
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Dodaj nowy przedmiot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+              required:
+                - name
+                - price
+      responses:
+        '201':
+          description: Dodano nowy przedmiot
+        '400':
+          description: Nieprawidłowe żądanie
+
+  /items/{id}:
+    get:
+      summary: Pobierz szczegóły przedmiotu
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Przedmiot nie znaleziony
+
+    put:
+      summary: Zaktualizuj przedmiot
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                price:
+                  type: number
+      responses:
+        '200':
+          description: Zaktualizowano przedmiot
+        '400':
+          description: Nieprawidłowe żądanie
+        '404':
+          description: Przedmiot nie znaleziony
+
+    delete:
+      summary: Usuń przedmiot
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Przedmiot usunięty
+        '404':
+          description: Przedmiot nie znaleziony
